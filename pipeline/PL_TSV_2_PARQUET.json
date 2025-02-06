@@ -60,7 +60,8 @@
 						"linkedServiceName": {
 							"referenceName": "ls_stgblobspring25",
 							"type": "LinkedServiceReference"
-						}
+						},
+						"path": "silver"
 					}
 				},
 				"inputs": [
