@@ -51,7 +51,6 @@
 					},
 					"sink": {
 						"type": "SnowflakeV2Sink",
-						"preCopyScript": "TRUNCATE TABLE STAGE.PET_LICENSE_STAGE",
 						"importSettings": {
 							"type": "SnowflakeImportCopyCommand"
 						}
@@ -79,7 +78,11 @@
 				"outputs": [
 					{
 						"referenceName": "SnowflakeTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "TEMP_SCHEMA",
+							"table_name": "PET_LICENSE_STAGE"
+						}
 					}
 				]
 			},
