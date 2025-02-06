@@ -35,7 +35,7 @@
 					},
 					"sink": {
 						"type": "SnowflakeV2Sink",
-						"preCopyScript": "TRUNCATE TABLE STAGE.SEATTLE_PET_LICENSES",
+						"preCopyScript": "TRUNCATE TABLE STAGE.PET_LICENSE_STAGE",
 						"importSettings": {
 							"type": "SnowflakeImportCopyCommand"
 						}
