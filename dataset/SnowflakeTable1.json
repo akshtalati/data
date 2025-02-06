@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "STAGE",
-			"table": "SEATTLE_PET_LIC_STG"
+			"table": "PET_LICENSE_STAGE"
 		}
 	}
 }
