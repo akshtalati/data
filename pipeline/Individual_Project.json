@@ -149,7 +149,7 @@
 		"variables": {
 			"myFileName": {
 				"type": "String",
-				"defaultValue": "NYPD.parquet"
+				"defaultValue": "New_NYPD_dataset.parquet"
 			}
 		},
 		"annotations": []
