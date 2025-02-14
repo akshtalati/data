@@ -1,0 +1,16 @@
+{
+	"name": "SnowflakeTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Snowflake2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "NYPD_SCHEMA",
+			"table": "NYPD_TABLE"
+		}
+	}
+}

@@ -65,7 +65,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": {
-								"value": "@variables('myFileName')",
+								"value": "@variables('file')",
 								"type": "Expression"
 							}
 						}
@@ -182,7 +182,7 @@
 						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -201,7 +201,7 @@
 							"referenceName": "ls_stgblobspring25",
 							"type": "LinkedServiceReference"
 						},
-						"path": "silver"
+						"path": "bronze"
 					}
 				},
 				"inputs": [
@@ -218,12 +218,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SnowflakeTable3",
-						"type": "DatasetReference",
-						"parameters": {
-							"TABLE": "NYPD_TABLE",
-							"SCHEMA": "NYPD_SCHEMA"
-						}
+						"referenceName": "SnowflakeTable4",
+						"type": "DatasetReference"
 					}
 				]
 			}
