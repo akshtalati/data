@@ -17,8 +17,8 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "NYPD_ARREST_SCHEMA",
-			"table": "NYPD_Arrest_Table"
+			"schema": "TEMP_SCHEMA",
+			"table": "PET_LICENSE_STAGE"
 		}
 	}
 }
