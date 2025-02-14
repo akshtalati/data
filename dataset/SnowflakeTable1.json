@@ -18,7 +18,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "NYPD_ARREST_SCHEMA",
-			"table": "NYPD_ARREST_TABLE"
+			"table": "NYPD_Arrest_Table"
 		}
 	}
 }
