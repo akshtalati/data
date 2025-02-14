@@ -85,8 +85,6 @@
 			{
 				"name": "Tsc_2_Parquet",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.00:30:00",
@@ -153,7 +151,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": {
-								"value": "@variables('myFileName')",
+								"value": "@variables('file')",
 								"type": "Expression"
 							}
 						}
@@ -163,7 +161,14 @@
 			{
 				"name": "Parquet_2_Snowflake_Try2",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Tsc_2_Parquet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.00:30:00",
 					"retry": 0,
@@ -214,7 +219,11 @@
 				"outputs": [
 					{
 						"referenceName": "SnowflakeTable3",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TABLE": "NYPD_TABLE",
+							"SCHEMA": "NYPD_SCHEMA"
+						}
 					}
 				]
 			}
