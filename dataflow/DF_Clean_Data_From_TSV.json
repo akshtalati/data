@@ -12,10 +12,21 @@
 					"name": "DelimeterTextDataset"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable5",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -40,7 +51,43 @@
 				"          Species = upper(Species),",
 				"          License_Number = toInteger(translate(License_Number, 'S', '')),",
 				"          Animals_Name = translate(Animals_Name, '()', ''),",
-				"          column1 = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"          Job_Exec_ID = $Job_ID,",
+				"          Job_Load_DT = currentDate()) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          License_Issue_Date,",
+				"          License_Number,",
+				"          Animals_Name,",
+				"          Species,",
+				"          Primary_Breed,",
+				"          Secondary_Breed,",
+				"          ZIP_Code,",
+				"          Job_Exec_ID,",
+				"          Job_Load_DT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          License_Issue_Date,",
+				"          License_Number,",
+				"          Animals_Name,",
+				"          Species,",
+				"          Primary_Breed,",
+				"          Secondary_Breed,",
+				"          ZIP_Code,",
+				"          Job_Exec_ID,",
+				"          Job_Load_DT",
+				"     )) ~> sink1"
 			]
 		}
 	}
