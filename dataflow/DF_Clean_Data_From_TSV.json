@@ -20,7 +20,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     jobID as string (\"10\")",
+				"     Job_ID as string (\"10\")",
 				"}",
 				"source(output(",
 				"          License_Issue_Date as string,",
