@@ -31,8 +31,12 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "SnowflakeTable7",
+						"type": "DatasetReference"
+					},
 					"name": "sinkBreedDim",
-					"description": "Export Data to SEATTLE_SCHEMA_BREED_DIM"
+					"description": "Export Data to BREED_DIM"
 				}
 			],
 			"transformations": [
@@ -122,8 +126,12 @@
 				"          DI_JOB_ID = $DI_JOB_ID) ~> DerivedColumns",
 				"DerivedColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     stageInsert: true,",
 				"     mapColumn(",
 				"          BREED_SK,",
 				"          PRIMARY_BREED_NAME = PRIMARY_BREED,",
@@ -131,8 +139,7 @@
 				"          SPECIES_NAME = SPECIES,",
 				"          DI_JOB_ID,",
 				"          DI_LOAD_DT",
-				"     ),",
-				"     format: 'table') ~> sinkBreedDim"
+				"     )) ~> sinkBreedDim"
 			]
 		}
 	}
