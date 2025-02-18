@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"Job_ID": {
-								"value": "@pipeline().RunId",
+								"value": "@substring(pipeline().RunId,1,10)",
 								"type": "Expression"
 							}
 						}
@@ -29,10 +29,21 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "Coarse"
 				}
 			}
 		],
+		"parameters": {
+			"Directory": {
+				"type": "string"
+			},
+			"File_Name": {
+				"type": "string"
+			},
+			"Delimeter": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
