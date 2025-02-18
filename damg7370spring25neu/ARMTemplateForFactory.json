@@ -1331,12 +1331,16 @@
 								"referenceName": "DF_Clean_Data_From_TSV",
 								"type": "DataFlowReference",
 								"parameters": {
-									"Job_ID": "\"10\""
+									"Job_ID": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									}
 								},
 								"datasetParameters": {
 									"DelimeterTextDataset": {},
 									"sink1": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
