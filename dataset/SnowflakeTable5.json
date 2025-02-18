@@ -9,8 +9,8 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "TEMP_SCHEMA",
-			"table": "Seattle_Pet_Licenses"
+			"schema": "SEATTLE_PET_LICENSE_SCHEMA",
+			"table": "Seattle_Pet_TABLE"
 		}
 	}
 }
