@@ -6,11 +6,11 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SnowflakeTable4",
+						"referenceName": "SnowflakeTable5",
 						"type": "DatasetReference"
 					},
 					"name": "sourceStg",
-					"description": "Import data from Stage table PET_LICENSE_STAGE"
+					"description": "Import data from Stage table SEATTLE_PET_TABLE"
 				},
 				{
 					"dataset": {
@@ -60,28 +60,7 @@
 				"parameters{",
 				"     DI_JOB_ID as string (\"59\")",
 				"}",
-				"source(output(",
-				"          ARREST_KEY as string,",
-				"          ARREST_DATE as string,",
-				"          PD_CD as string,",
-				"          PD_DESC as string,",
-				"          KY_CD as string,",
-				"          OFNS_DESC as string,",
-				"          LAW_CODE as string,",
-				"          LAW_CAT_CD as string,",
-				"          ARREST_BORO as string,",
-				"          ARREST_PRECINCT as string,",
-				"          JURISDICTION_CODE as string,",
-				"          AGE_GROUP as string,",
-				"          PERP_SEX as string,",
-				"          PERP_RACE as string,",
-				"          X_COORD_CD as string,",
-				"          Y_COORD_CD as string,",
-				"          LATITUDE as string,",
-				"          LONGITUDE as string,",
-				"          NEW_GEOREFERENCED_COLUMN as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> sourceStg",
 				"source(output(",

@@ -19,8 +19,8 @@
 						"referenceName": "DF_Clean_Data_From_TSV",
 						"type": "DataFlowReference",
 						"parameters": {
-							"Job_ID": {
-								"value": "@substring(pipeline().RunId,1,10)",
+							"JOB_ID_Param": {
+								"value": "'@{pipeline().RunId}'",
 								"type": "Expression"
 							}
 						}
