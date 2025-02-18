@@ -24,6 +24,20 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceBreedDim"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable10",
+						"type": "DatasetReference"
+					},
+					"name": "sourceDateDim"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable11",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [],
@@ -33,6 +47,12 @@
 				},
 				{
 					"name": "joinBreedDim"
+				},
+				{
+					"name": "joinDateDim"
+				},
+				{
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -72,6 +92,26 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> sourceBreedDim",
+				"source(output(",
+				"          DATE_SK as decimal(10,0),",
+				"          DAY_NAME as string,",
+				"          DAY_ABBR as string,",
+				"          DAY_NUM as decimal(2,0),",
+				"          MONTH_NAME as string,",
+				"          MONTH_NUM as decimal(2,0),",
+				"          QTR_NUM as decimal(2,0),",
+				"          DT as date,",
+				"          YEAR_NUM as decimal(4,0),",
+				"          IS_WEEKEND as decimal(2,0),",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> sourceDateDim",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source2",
 				"source1, sourceLocDim join(source1@ZIP_Code == sourceLocDim@ZIP_CODE,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -81,7 +121,15 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinBreedDim"
+				"     broadcast: 'auto')~> joinBreedDim",
+				"joinBreedDim, sourceDateDim join(Load_Date == sourceDateDim@DI_LOAD_DT,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinDateDim",
+				"joinDateDim keyGenerate(output({undefined} as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1"
 			]
 		}
 	}

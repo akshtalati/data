@@ -1,0 +1,16 @@
+{
+	"name": "SnowflakeTable10",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Snowflake7",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SEATTLE_PET_LICENSE_SCHEMA",
+			"table": "DATE_DIM"
+		}
+	}
+}
