@@ -2,15 +2,15 @@
 	"name": "SnowflakeTable4",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Snowflake2",
+			"referenceName": "Snowflake5",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "NYPD_SCHEMA",
-			"table": "NYPD_TABLE"
+			"schema": "SEATTLE_PET_LICENSE_SCHEMA",
+			"table": "SEATTLE_PET_TABLE"
 		}
 	}
 }
