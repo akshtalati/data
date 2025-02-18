@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "SEATTLE_PET_LICENSE_SCHEMA",
-			"table": "SEATTLE_PET_TABLE"
+			"table": "LOCATION_DIM"
 		}
 	}
 }
