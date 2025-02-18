@@ -21,8 +21,12 @@
 					"description": "Import Data from Breed Dim"
 				},
 				{
+					"dataset": {
+						"referenceName": "SnowflakeTable7",
+						"type": "DatasetReference"
+					},
 					"name": "sourceBreedDim",
-					"description": "Import Data from ds_Demo_SCHEMA_BREED_DIM"
+					"description": "Import Data from BREED_DIM"
 				}
 			],
 			"sinks": [
@@ -82,15 +86,16 @@
 				"     query: 'SELECT NVL(MAX(BREED_SK),0) as MaxBreedSK FROM SEATTLE_PET_LICENSE_SCHEMA.BREED_DIM',",
 				"     format: 'query') ~> BreedDimMaxId",
 				"source(output(",
-				"          BREED_SK as string,",
+				"          BREED_SK as decimal(10,0),",
 				"          PRIMARY_BREED_NAME as string,",
 				"          SECONDARY_BREED_NAME as string,",
 				"          SPECIES_NAME as string,",
 				"          DI_JOB_ID as string,",
-				"          DI_LOAD_DT as string",
+				"          DI_LOAD_DT as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false) ~> sourceBreedDim",
+				"     validateSchema: false,",
+				"     format: 'table') ~> sourceBreedDim",
 				"sourceStg, BreedDimMaxId join(1==1,",
 				"     joinType:'cross',",
 				"     matchType:'exact',",
@@ -100,7 +105,7 @@
 				"          PRIMARY_BREED = Primary_Breed,",
 				"          SECONDARY_BREED = Secondary_Breed,",
 				"          MAXBREEDSK),",
-				"     COUNT_ROW = count(LICENSE_NUMBER)) ~> aggregateBreedKeys",
+				"     COUNT_ROW = count(LIC_Number)) ~> aggregateBreedKeys",
 				"aggregateBreedKeys, sourceBreedDim join(PRIMARY_BREED == PRIMARY_BREED_NAME",
 				"     && SECONDARY_BREED == SECONDARY_BREED_NAME",
 				"     && SPECIES == SPECIES_NAME,",
