@@ -1,0 +1,88 @@
+{
+	"name": "df_Fact_Load",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable5",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable8",
+						"type": "DatasetReference"
+					},
+					"name": "sourceLocDim"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable9",
+						"type": "DatasetReference"
+					},
+					"name": "sourceBreedDim"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "joinLocDim"
+				},
+				{
+					"name": "joinBreedDim"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Species as string,",
+				"          Primary_Breed as string,",
+				"          Secondary_Breed as string,",
+				"          ZIP_Code as string,",
+				"          LIC_ISSUE_DATE as date,",
+				"          LIC_Number as decimal(38,0),",
+				"          Animal_NAME as string,",
+				"          Load_Date as date,",
+				"          Job_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source1",
+				"source(output(",
+				"          LOCATION_SK as decimal(10,0),",
+				"          ZIP_CODE as string,",
+				"          CITY as string,",
+				"          STATE as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> sourceLocDim",
+				"source(output(",
+				"          BREED_SK as decimal(10,0),",
+				"          PRIMARY_BREED_NAME as string,",
+				"          SECONDARY_BREED_NAME as string,",
+				"          SPECIES_NAME as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> sourceBreedDim",
+				"source1, sourceLocDim join(source1@ZIP_Code == sourceLocDim@ZIP_CODE,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinLocDim",
+				"joinLocDim, sourceBreedDim join(Primary_Breed == PRIMARY_BREED_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinBreedDim"
+			]
+		}
+	}
+}
