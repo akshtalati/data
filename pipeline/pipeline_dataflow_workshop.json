@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "CleanPetLicData",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -35,13 +35,13 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "LoadBreedDim",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "CleanPetLicData",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -74,13 +74,13 @@
 				}
 			},
 			{
-				"name": "Data flow3",
+				"name": "LoadLocationDim",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Data flow2",
+						"activity": "LoadBreedDim",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -107,11 +107,11 @@
 				}
 			},
 			{
-				"name": "Data flow4",
+				"name": "LoadFact",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow3",
+						"activity": "LoadLocationDim",
 						"dependencyConditions": [
 							"Succeeded"
 						]
