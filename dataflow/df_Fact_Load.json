@@ -111,7 +111,7 @@
 				"     format: 'table') ~> sourceDateDim",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     query: 'SELECT NVL(max(pet))',",
+				"     query: 'SELECT NVL(max(PET_LIC_SK),0) As PET_LIC_SK from SEATTLE_PET_LICENSE_SCHEMA.PET_LIC_FCT',",
 				"     format: 'query') ~> FactMaxID",
 				"source1, sourceLocDim join(source1@ZIP_Code == sourceLocDim@ZIP_CODE,",
 				"     joinType:'inner',",
