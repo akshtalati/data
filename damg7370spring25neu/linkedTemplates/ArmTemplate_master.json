@@ -19,6 +19,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake2'"
 		},
+		"Snowflake5_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake5'"
+		},
+		"Snowflake6_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake6'"
+		},
 		"Snowflake_Individual_Project_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake_Individual_Project'"
@@ -27,9 +35,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
 		},
-		"Snowflake5_password": {
+		"Snowflake7_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Snowflake5'"
+			"metadata": "Secure string for 'password' of 'Snowflake7'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -59,6 +67,22 @@
 			"type": "string",
 			"defaultValue": "NYPD_ROLE"
 		},
+		"Snowflake5_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SEATTLE_PET_LICENSE_DB"
+		},
+		"Snowflake5_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "SEATTLE_PET_LICENSE_ROLE"
+		},
+		"Snowflake6_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "TEMP_DB"
+		},
+		"Snowflake6_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "TEMP_ROLE"
+		},
 		"Snowflake_Individual_Project_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "NYPD_Arrest_DB"
@@ -79,13 +103,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
 		},
-		"Snowflake5_properties_typeProperties_database": {
+		"Snowflake7_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "TEMP_DB"
+			"defaultValue": "SEATTLE_PET_LICENSE_DB"
 		},
-		"Snowflake5_properties_typeProperties_role": {
+		"Snowflake7_properties_typeProperties_role": {
 			"type": "string",
-			"defaultValue": "TEMP_ROLE"
+			"defaultValue": "SEATTLE_PET_LICENSE_ROLE"
 		},
 		"containerUri": {
 			"type": "string",
@@ -123,14 +147,20 @@
 					"Snowflake2_password": {
 						"value": "[parameters('Snowflake2_password')]"
 					},
+					"Snowflake5_password": {
+						"value": "[parameters('Snowflake5_password')]"
+					},
+					"Snowflake6_password": {
+						"value": "[parameters('Snowflake6_password')]"
+					},
 					"Snowflake_Individual_Project_password": {
 						"value": "[parameters('Snowflake_Individual_Project_password')]"
 					},
 					"ls_snowflake_password": {
 						"value": "[parameters('ls_snowflake_password')]"
 					},
-					"Snowflake5_password": {
-						"value": "[parameters('Snowflake5_password')]"
+					"Snowflake7_password": {
+						"value": "[parameters('Snowflake7_password')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
@@ -153,6 +183,18 @@
 					"Snowflake2_properties_typeProperties_role": {
 						"value": "[parameters('Snowflake2_properties_typeProperties_role')]"
 					},
+					"Snowflake5_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake5_properties_typeProperties_database')]"
+					},
+					"Snowflake5_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake5_properties_typeProperties_role')]"
+					},
+					"Snowflake6_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake6_properties_typeProperties_database')]"
+					},
+					"Snowflake6_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake6_properties_typeProperties_role')]"
+					},
 					"Snowflake_Individual_Project_properties_typeProperties_database": {
 						"value": "[parameters('Snowflake_Individual_Project_properties_typeProperties_database')]"
 					},
@@ -168,11 +210,11 @@
 					"ls_stgblobspring25_sasUri": {
 						"value": "[parameters('ls_stgblobspring25_sasUri')]"
 					},
-					"Snowflake5_properties_typeProperties_database": {
-						"value": "[parameters('Snowflake5_properties_typeProperties_database')]"
+					"Snowflake7_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake7_properties_typeProperties_database')]"
 					},
-					"Snowflake5_properties_typeProperties_role": {
-						"value": "[parameters('Snowflake5_properties_typeProperties_role')]"
+					"Snowflake7_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake7_properties_typeProperties_role')]"
 					}
 				}
 			},

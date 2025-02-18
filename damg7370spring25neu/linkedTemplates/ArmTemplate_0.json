@@ -19,6 +19,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake2'"
 		},
+		"Snowflake5_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake5'"
+		},
+		"Snowflake6_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake6'"
+		},
 		"Snowflake_Individual_Project_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake_Individual_Project'"
@@ -27,9 +35,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
 		},
-		"Snowflake5_password": {
+		"Snowflake7_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Snowflake5'"
+			"metadata": "Secure string for 'password' of 'Snowflake7'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -59,6 +67,22 @@
 			"type": "string",
 			"defaultValue": "NYPD_ROLE"
 		},
+		"Snowflake5_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SEATTLE_PET_LICENSE_DB"
+		},
+		"Snowflake5_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "SEATTLE_PET_LICENSE_ROLE"
+		},
+		"Snowflake6_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "TEMP_DB"
+		},
+		"Snowflake6_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "TEMP_ROLE"
+		},
 		"Snowflake_Individual_Project_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "NYPD_Arrest_DB"
@@ -79,13 +103,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
 		},
-		"Snowflake5_properties_typeProperties_database": {
+		"Snowflake7_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "TEMP_DB"
+			"defaultValue": "SEATTLE_PET_LICENSE_DB"
 		},
-		"Snowflake5_properties_typeProperties_role": {
+		"Snowflake7_properties_typeProperties_role": {
 			"type": "string",
-			"defaultValue": "TEMP_ROLE"
+			"defaultValue": "SEATTLE_PET_LICENSE_ROLE"
 		}
 	},
 	"variables": {
@@ -182,6 +206,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Snowflake5')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "hwa55033.east-us-2.azure",
+					"user": "SEATTLE_PET_LICENSE_USER",
+					"database": "[parameters('Snowflake5_properties_typeProperties_database')]",
+					"warehouse": "SEATTLE_PET_LICENSE_WH",
+					"role": "[parameters('Snowflake5_properties_typeProperties_role')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Snowflake5_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Snowflake6')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "hwa55033.east-us-2.azure",
+					"user": "TEMP_USER",
+					"database": "[parameters('Snowflake6_properties_typeProperties_database')]",
+					"warehouse": "TEMP_WH",
+					"role": "[parameters('Snowflake6_properties_typeProperties_role')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Snowflake6_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Snowflake_Individual_Project')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -239,7 +307,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Snowflake5')]",
+			"name": "[concat(parameters('factoryName'), '/Snowflake7')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -248,13 +316,13 @@
 				"typeProperties": {
 					"authenticationType": "Basic",
 					"accountIdentifier": "hwa55033.east-us-2.azure",
-					"user": "TEMP_USER",
-					"database": "[parameters('Snowflake5_properties_typeProperties_database')]",
-					"warehouse": "TEMP_WH",
-					"role": "[parameters('Snowflake5_properties_typeProperties_role')]",
+					"user": "SEATTLE_PET_LICENSE_USER",
+					"database": "[parameters('Snowflake7_properties_typeProperties_database')]",
+					"warehouse": "SEATTLE_PET_LICENSE_WH",
+					"role": "[parameters('Snowflake7_properties_typeProperties_role')]",
 					"password": {
 						"type": "SecureString",
-						"value": "[parameters('Snowflake5_password')]"
+						"value": "[parameters('Snowflake7_password')]"
 					}
 				}
 			},
@@ -283,6 +351,39 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText_Dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage_LS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Seattle_Pet_Licenses_new.tsv",
+						"fileSystem": "bronse"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "License_Issue_Date\tLicense_Number\tAnimals_Name\tSpecies\tPrimary_Breed\tSecondary_Breed\tZIP_Code",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_LS')]"
@@ -469,60 +570,6 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Snowflake2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [],
-				"typeProperties": {
-					"schema": "NYPD_SCHEMA",
-					"table": "NYPD_TABLE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Snowflake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText_Dataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage_LS",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Seattle_Pet_Licenses_new.tsv",
-						"fileSystem": "bronse"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "License_Issue_Date\tLicense_Number\tAnimals_Name\tSpecies\tPrimary_Breed\tSecondary_Breed\tZIP_Code",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_LS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeTable5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
 					"referenceName": "Snowflake5",
 					"type": "LinkedServiceReference"
 				},
@@ -530,243 +577,12 @@
 				"type": "SnowflakeV2Table",
 				"schema": [],
 				"typeProperties": {
-					"schema": "TEMP_SCHEMA",
-					"table": "Seattle_Pet_Licenses"
+					"schema": "SEATTLE_PET_LICENSE_SCHEMA",
+					"table": "SEATTLE_PET_TABLE"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Snowflake5')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Individual_Project')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Tsc_2_Parquet",
-						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:30:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": true,
-							"logSettings": {
-								"enableCopyActivityLog": true,
-								"copyActivityLogSettings": {
-									"logLevel": "Warning",
-									"enableReliableLogging": false
-								},
-								"logLocationSettings": {
-									"linkedServiceName": {
-										"referenceName": "AzureDataLakeStorage_LS",
-										"type": "LinkedServiceReference"
-									}
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Individal_project",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet_individal_project",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": {
-										"value": "@variables('myFileName')",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "Parquet_2_Snowflake_copy1",
-						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:30:00",
-							"retry": 1,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SnowflakeV2Sink",
-								"importSettings": {
-									"type": "SnowflakeImportCopyCommand"
-								}
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "ls_stgblobspring25",
-									"type": "LinkedServiceReference"
-								},
-								"path": "silver"
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Parquet_individal_project",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": {
-										"value": "@variables('myFileName')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SnowflakeTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"schema_name": "NYPD_Arrest_SCHEMA",
-									"table_name": "NYPT_Arrest_Table"
-								}
-							}
-						]
-					},
-					{
-						"name": "Parquet_2_Snowflake",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:30:00",
-							"retry": 1,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SnowflakeV2Sink",
-								"importSettings": {
-									"type": "SnowflakeImportCopyCommand"
-								}
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "ls_stgblobspring25",
-									"type": "LinkedServiceReference"
-								},
-								"path": "silver"
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Parquet_individal_project",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": {
-										"value": "@variables('myFileName')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SnowflakeTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"schema_name": "NYPD_ARREST_SCHEMA",
-									"table_name": "NYPD_ARREST_TABLE"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"myFileName": {
-						"type": "String",
-						"defaultValue": "New_NYPD_dataset.parquet"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Individal_project')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet_individal_project')]",
-				"[concat(variables('factoryId'), '/datasets/SnowflakeTable1')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_LS')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_stgblobspring25')]"
 			]
 		}
 	]

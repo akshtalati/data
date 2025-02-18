@@ -14,13 +14,19 @@
 		"Snowflake2_password": {
 			"value": ""
 		},
+		"Snowflake5_password": {
+			"value": ""
+		},
+		"Snowflake6_password": {
+			"value": ""
+		},
 		"Snowflake_Individual_Project_password": {
 			"value": ""
 		},
 		"ls_snowflake_password": {
 			"value": ""
 		},
-		"Snowflake5_password": {
+		"Snowflake7_password": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
@@ -44,6 +50,18 @@
 		"Snowflake2_properties_typeProperties_role": {
 			"value": "NYPD_ROLE"
 		},
+		"Snowflake5_properties_typeProperties_database": {
+			"value": "SEATTLE_PET_LICENSE_DB"
+		},
+		"Snowflake5_properties_typeProperties_role": {
+			"value": "SEATTLE_PET_LICENSE_ROLE"
+		},
+		"Snowflake6_properties_typeProperties_database": {
+			"value": "TEMP_DB"
+		},
+		"Snowflake6_properties_typeProperties_role": {
+			"value": "TEMP_ROLE"
+		},
 		"Snowflake_Individual_Project_properties_typeProperties_database": {
 			"value": "NYPD_Arrest_DB"
 		},
@@ -59,11 +77,11 @@
 		"ls_stgblobspring25_sasUri": {
 			"value": ""
 		},
-		"Snowflake5_properties_typeProperties_database": {
-			"value": "TEMP_DB"
+		"Snowflake7_properties_typeProperties_database": {
+			"value": "SEATTLE_PET_LICENSE_DB"
 		},
-		"Snowflake5_properties_typeProperties_role": {
-			"value": "TEMP_ROLE"
+		"Snowflake7_properties_typeProperties_role": {
+			"value": "SEATTLE_PET_LICENSE_ROLE"
 		},
 		"containerUri": {
 			"value": ""
