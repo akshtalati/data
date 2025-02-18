@@ -59,7 +59,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"DI_JOB_ID": {
-								"value": "substring(pipeline().RunId, 1,10)",
+								"value": "'@{substring(pipeline().RunId, 1,10)}'",
 								"type": "Expression"
 							}
 						}
@@ -68,7 +68,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Coarse"
+					"traceLevel": "Fine"
 				}
 			}
 		],
