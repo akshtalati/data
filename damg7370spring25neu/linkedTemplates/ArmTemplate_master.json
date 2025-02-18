@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake1'"
 		},
+		"Snowflake2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake2'"
+		},
 		"Snowflake_Individual_Project_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake_Individual_Project'"
@@ -23,9 +27,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
 		},
-		"Snowflake2_password": {
+		"Snowflake5_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Snowflake2'"
+			"metadata": "Secure string for 'password' of 'Snowflake5'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -44,6 +48,14 @@
 			"defaultValue": "NYPD_DB"
 		},
 		"Snowflake1_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "NYPD_ROLE"
+		},
+		"Snowflake2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "NYPD_DB"
+		},
+		"Snowflake2_properties_typeProperties_role": {
 			"type": "string",
 			"defaultValue": "NYPD_ROLE"
 		},
@@ -67,13 +79,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
 		},
-		"Snowflake2_properties_typeProperties_database": {
+		"Snowflake5_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "NYPD_DB"
+			"defaultValue": "TEMP_DB"
 		},
-		"Snowflake2_properties_typeProperties_role": {
+		"Snowflake5_properties_typeProperties_role": {
 			"type": "string",
-			"defaultValue": "NYPD_ROLE"
+			"defaultValue": "TEMP_ROLE"
 		},
 		"containerUri": {
 			"type": "string",
@@ -108,14 +120,17 @@
 					"Snowflake1_password": {
 						"value": "[parameters('Snowflake1_password')]"
 					},
+					"Snowflake2_password": {
+						"value": "[parameters('Snowflake2_password')]"
+					},
 					"Snowflake_Individual_Project_password": {
 						"value": "[parameters('Snowflake_Individual_Project_password')]"
 					},
 					"ls_snowflake_password": {
 						"value": "[parameters('ls_snowflake_password')]"
 					},
-					"Snowflake2_password": {
-						"value": "[parameters('Snowflake2_password')]"
+					"Snowflake5_password": {
+						"value": "[parameters('Snowflake5_password')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
@@ -132,6 +147,12 @@
 					"Snowflake1_properties_typeProperties_role": {
 						"value": "[parameters('Snowflake1_properties_typeProperties_role')]"
 					},
+					"Snowflake2_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake2_properties_typeProperties_database')]"
+					},
+					"Snowflake2_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake2_properties_typeProperties_role')]"
+					},
 					"Snowflake_Individual_Project_properties_typeProperties_database": {
 						"value": "[parameters('Snowflake_Individual_Project_properties_typeProperties_database')]"
 					},
@@ -147,15 +168,35 @@
 					"ls_stgblobspring25_sasUri": {
 						"value": "[parameters('ls_stgblobspring25_sasUri')]"
 					},
-					"Snowflake2_properties_typeProperties_database": {
-						"value": "[parameters('Snowflake2_properties_typeProperties_database')]"
+					"Snowflake5_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake5_properties_typeProperties_database')]"
 					},
-					"Snowflake2_properties_typeProperties_role": {
-						"value": "[parameters('Snowflake2_properties_typeProperties_role')]"
+					"Snowflake5_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake5_properties_typeProperties_role')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "damg7370spring25neu_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'damg7370spring25neu_ArmTemplate_0')]"
+			]
 		}
 	]
 }
