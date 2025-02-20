@@ -29,6 +29,9 @@
 		"ls_snowflake_password": {
 			"value": ""
 		},
+		"Snowflake8_password": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://damg7370spring2025blob.dfs.core.windows.net/"
 		},
@@ -82,6 +85,12 @@
 		},
 		"ls_stgblobspring25_sasUri": {
 			"value": ""
+		},
+		"Snowflake8_properties_typeProperties_database": {
+			"value": "NYPD_DB"
+		},
+		"Snowflake8_properties_typeProperties_role": {
+			"value": "NYPD_ROLE"
 		}
 	}
 }

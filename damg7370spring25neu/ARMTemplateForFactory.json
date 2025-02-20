@@ -39,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
 		},
+		"Snowflake8_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake8'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://damg7370spring2025blob.dfs.core.windows.net/"
@@ -110,6 +114,14 @@
 		"ls_stgblobspring25_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
+		},
+		"Snowflake8_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "NYPD_DB"
+		},
+		"Snowflake8_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "NYPD_ROLE"
 		}
 	},
 	"variables": {
@@ -125,8 +137,6 @@
 					{
 						"name": "Tsc_2_Parquet",
 						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.00:30:00",
@@ -206,7 +216,14 @@
 						"type": "Copy",
 						"state": "Inactive",
 						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Tsc_2_Parquet",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.00:30:00",
 							"retry": 1,
@@ -268,6 +285,8 @@
 					{
 						"name": "Parquet_2_Snowflake",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.00:30:00",
@@ -758,7 +777,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "SnowflakeTable4",
+								"referenceName": "SnowflakeTable13",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -781,7 +800,7 @@
 				"[concat(variables('factoryId'), '/datasets/SnowflakeTable1')]",
 				"[concat(variables('factoryId'), '/datasets/Individal_project')]",
 				"[concat(variables('factoryId'), '/datasets/Parquet_individal_project')]",
-				"[concat(variables('factoryId'), '/datasets/SnowflakeTable4')]",
+				"[concat(variables('factoryId'), '/datasets/SnowflakeTable13')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_stgblobspring25')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_LS')]"
 			]
@@ -2254,6 +2273,49 @@
 				"[concat(variables('factoryId'), '/datasets/SnowflakeTable9')]",
 				"[concat(variables('factoryId'), '/datasets/SnowflakeTable10')]",
 				"[concat(variables('factoryId'), '/datasets/SnowflakeTable11')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Snowflake8')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "hwa55033.east-us-2.azure",
+					"user": "NYPD_USER",
+					"database": "[parameters('Snowflake8_properties_typeProperties_database')]",
+					"warehouse": "NYPD_WH",
+					"role": "[parameters('Snowflake8_properties_typeProperties_role')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Snowflake8_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeTable13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake8",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": "NYPD_SCHEMA",
+					"table": "NYPD_TABLE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Snowflake8')]"
 			]
 		}
 	]

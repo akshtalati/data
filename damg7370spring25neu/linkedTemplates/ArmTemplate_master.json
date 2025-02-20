@@ -39,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
 		},
+		"Snowflake8_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake8'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://damg7370spring2025blob.dfs.core.windows.net/"
@@ -111,6 +115,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
 		},
+		"Snowflake8_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "NYPD_DB"
+		},
+		"Snowflake8_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "NYPD_ROLE"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -161,6 +173,9 @@
 					},
 					"ls_snowflake_password": {
 						"value": "[parameters('ls_snowflake_password')]"
+					},
+					"Snowflake8_password": {
+						"value": "[parameters('Snowflake8_password')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
@@ -215,6 +230,12 @@
 					},
 					"ls_stgblobspring25_sasUri": {
 						"value": "[parameters('ls_stgblobspring25_sasUri')]"
+					},
+					"Snowflake8_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake8_properties_typeProperties_database')]"
+					},
+					"Snowflake8_properties_typeProperties_role": {
+						"value": "[parameters('Snowflake8_properties_typeProperties_role')]"
 					}
 				}
 			},
