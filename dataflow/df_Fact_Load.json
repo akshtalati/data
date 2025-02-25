@@ -179,10 +179,10 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     stageInsert: true,",
 				"     mapColumn(",
-				"          LOCATION_SK,",
-				"          BREED_SK,",
 				"          PET_LIC_SK,",
 				"          DATE_SK,",
+				"          LOCATION_SK,",
+				"          BREED_SK,",
 				"          DI_JOB_ID,",
 				"          DI_LOAD_DT",
 				"     )) ~> sink1"
