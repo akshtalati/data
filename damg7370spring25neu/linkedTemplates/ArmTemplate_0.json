@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake7'"
 		},
+		"Snowflake8_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake8'"
+		},
 		"Snowflake_Individual_Project_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake_Individual_Project'"
@@ -38,10 +42,6 @@
 		"ls_snowflake_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_snowflake'"
-		},
-		"Snowflake8_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Snowflake8'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
@@ -95,6 +95,14 @@
 			"type": "string",
 			"defaultValue": "SEATTLE_PET_LICENSE_ROLE"
 		},
+		"Snowflake8_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "NYPD_DB"
+		},
+		"Snowflake8_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "NYPD_ROLE"
+		},
 		"Snowflake_Individual_Project_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "NYPD_Arrest_DB"
@@ -114,14 +122,6 @@
 		"ls_stgblobspring25_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'ls_stgblobspring25'"
-		},
-		"Snowflake8_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "NYPD_DB"
-		},
-		"Snowflake8_properties_typeProperties_role": {
-			"type": "string",
-			"defaultValue": "NYPD_ROLE"
 		}
 	},
 	"variables": {
@@ -284,6 +284,28 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Snowflake8')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "hwa55033.east-us-2.azure",
+					"user": "NYPD_USER",
+					"database": "[parameters('Snowflake8_properties_typeProperties_database')]",
+					"warehouse": "NYPD_WH",
+					"role": "[parameters('Snowflake8_properties_typeProperties_role')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Snowflake8_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Snowflake_Individual_Project')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -336,28 +358,6 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"sasUri": "[parameters('ls_stgblobspring25_sasUri')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Snowflake8')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SnowflakeV2",
-				"typeProperties": {
-					"authenticationType": "Basic",
-					"accountIdentifier": "hwa55033.east-us-2.azure",
-					"user": "NYPD_USER",
-					"database": "[parameters('Snowflake8_properties_typeProperties_database')]",
-					"warehouse": "NYPD_WH",
-					"role": "[parameters('Snowflake8_properties_typeProperties_role')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Snowflake8_password')]"
-					}
 				}
 			},
 			"dependsOn": []

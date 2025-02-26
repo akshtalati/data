@@ -97,6 +97,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeTable13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake8",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": "NYPD_SCHEMA",
+					"table": "NYPD_TABLE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SnowflakeTable2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -254,25 +273,6 @@
 				"typeProperties": {
 					"schema": "SEATTLE_PET_LICENSE_SCHEMA",
 					"table": "BREED_DIM"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeTable13')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Snowflake8",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [],
-				"typeProperties": {
-					"schema": "NYPD_SCHEMA",
-					"table": "NYPD_TABLE"
 				}
 			},
 			"dependsOn": []
@@ -1341,7 +1341,8 @@
 							"name": "joinFCT"
 						},
 						{
-							"name": "select1"
+							"name": "select1",
+							"description": "Renaming joinFCT to select1 with columns 'LOCATION_SK, BREED_SK, PET_LIC_SK, DATE_DIM_SK, DI_JOB_ID, DI_LOAD_DT'"
 						},
 						{
 							"name": "derivedColumn1"
@@ -1385,18 +1386,18 @@
 						"     validateSchema: false,",
 						"     format: 'table') ~> sourceBreedDim",
 						"source(output(",
-						"          DATE_SK as decimal(10,0),",
-						"          DAY_NAME as string,",
-						"          DAY_ABBR as string,",
-						"          DAY_NUM as decimal(2,0),",
-						"          MONTH_NAME as string,",
-						"          MONTH_NUM as decimal(2,0),",
-						"          QTR_NUM as decimal(2,0),",
 						"          DT as date,",
+						"          ABRV_DAY_NAME as string,",
+						"          MONTH_NAME as string,",
+						"          START_DAY_OF_MONTH as date,",
+						"          END_DAY_OF_MONTH as date,",
+						"          QUARTER_NUM as decimal(2,0),",
+						"          DAY_OF_WEEK as decimal(2,0),",
+						"          IS_WEEKEND as decimal(1,0),",
 						"          YEAR_NUM as decimal(4,0),",
-						"          IS_WEEKEND as decimal(2,0),",
-						"          DI_JOB_ID as string,",
-						"          DI_LOAD_DT as date",
+						"          MONTH_NUM as decimal(2,0),",
+						"          DAY_NUM as decimal(2,0),",
+						"          DATE_DIM_SK as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -1413,12 +1414,14 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> joinLocDim",
-						"joinLocDim, sourceBreedDim join(Primary_Breed == PRIMARY_BREED_NAME,",
+						"joinLocDim, sourceBreedDim join(Primary_Breed == PRIMARY_BREED_NAME",
+						"     && Secondary_Breed == SECONDARY_BREED_NAME",
+						"     && Species == SPECIES_NAME,",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> joinBreedDim",
-						"joinBreedDim, sourceDateDim join(Load_Date == sourceDateDim@DI_LOAD_DT,",
+						"joinBreedDim, sourceDateDim join(LIC_ISSUE_DATE == DT,",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -1432,10 +1435,10 @@
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> joinFCT",
 						"joinFCT select(mapColumn(",
+						"          PET_LIC_SK = MAX_LIC,",
+						"          DATE_DIM_SK,",
 						"          LOCATION_SK,",
 						"          BREED_SK,",
-						"          PET_LIC_SK = MAX_LIC,",
-						"          DATE_SK,",
 						"          DI_JOB_ID = sourceLocDim@DI_JOB_ID,",
 						"          DI_LOAD_DT = sourceLocDim@DI_LOAD_DT",
 						"     ),",
@@ -1457,7 +1460,7 @@
 						"          LOCATION_SK,",
 						"          BREED_SK,",
 						"          PET_LIC_SK,",
-						"          DATE_SK,",
+						"          DATE_DIM_SK,",
 						"          DI_JOB_ID,",
 						"          DI_LOAD_DT",
 						"     )) ~> sink1"
